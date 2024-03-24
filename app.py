@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = Flask(__name__)
 
-key = input("Enter the api key for OpenAI: ")
+key = input("*Enter the OpenAI API key: ")
 client = OpenAI(api_key=key)
 
 bilstm_tokenizer = Tokenizer()
