@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyze Text</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+  <center>
+    <div id="container">
+      <div class="corrected-box">
+        <div class="corrected-text-box">
+          <h3>Your Text:</h3>
+          <p>{{ input_text }}</p>
+        </div>
+        <div class="corrected-text-box">
+          <h3>Corrected Text:</h3>
+          <p>{{ output_text_t5 }}</p>
+        </div>
+      <form action="/error" method="GET">
+        <button class="b1" type="submit">Error Analysis</button>
+      </form></div>
+      
+    </div>
+  </center>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing Assistant</title>
+  
+  <link rel="stylesheet" href="../static/style.css">
+
+</head>
+
+<body>
+
+    <center>
+      <div id="container">
+        <h3>Write a sentence</h1>
+          <div class="text-input">
+            <form action="/score" method="POST">
+              <textarea name="input_text" placeholder="Enter your text here..."></textarea><br>
+
+              <div class="hero">
+                <label for="input-file" id="drop-area">
+                  <input type="file" accept="/*" id="input-file" hidden>
+                  <span>+ Upload file</span>
+                </label>
+              </div>
+
+              <button type="submit">Compute Text</button>
+            </form>
+
+          </div>
+      </div>
+    </center>
+
+
+</body>
+
+</html>

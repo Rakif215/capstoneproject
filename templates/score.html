@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+
+  <body>
+    <center>
+      <div id="container">
+        <h2>Your score</h2>
+        <!-- <p>You scored <span id="score-value"></span> out of 5.0</p> -->
+        <input type="button" id="toggleButton" value="Toggle Model" />
+
+        <!-- Add a hidden input field to store the current model -->
+        <input
+          type="hidden"
+          id="currentModel"
+          name="currentModel"
+          value="bilstm"
+        />
+        <h3 id="model_heading">Bi-Directional LSTM Scores</h2>
+        <div class="score-box-container">
+          
+          <div class="score-box bilstm passive-voice-score">
+            Passive voice<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[0]) }}/5</span>
+          </div>
+          <div class="score-box bilstm tense-score">
+            Tense<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[1]) }}/5</span>
+          </div>
+          <div class="score-box bilstm spelling-score">
+            Spelling<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[2]) }}/5</span>
+          </div>
+          <div class="score-box bilstm passive-voice-score">
+            Passive voice<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[3]) }}/5</span>
+          </div>
+          <div class="score-box bilstm tense-score">
+            Tense<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[4]) }}/5</span>
+          </div>
+          <div class="score-box bilstm spelling-score">
+            Spelling<br /><br />
+            <span id="sctext">{{ '%.2f'|format(prediction[5]) }} /5</span>
+          </div>
+        </div>
+
+        <div class="score-box-container">
+          <div
+            class="score-box second-model passive-voice-score"
+            style="display: none"
+          >
+            LOG Passive voice<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[0]) }}/5</span
+            >
+          </div>
+          <div class="score-box second-model tense-score" style="display: none">
+            Tense<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[1]) }}/5</span
+            >
+          </div>
+          <div
+            class="score-box second-model spelling-score"
+            style="display: none"
+          >
+            Spelling<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[2]) }}/5</span
+            >
+          </div>
+          <div
+            class="score-box second-model passive-voice-score"
+            style="display: none"
+          >
+            Passive voice<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[3]) }}/5</span
+            >
+          </div>
+          <div class="score-box second-model tense-score" style="display: none">
+            Tense<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[4]) }}/5</span
+            >
+          </div>
+          <div
+            class="score-box second-model spelling-score"
+            style="display: none"
+          >
+            Spelling<br /><br />
+            <span id="sctext"
+              >{{ '%.2f'|format(second_model_prediction[5]) }}/5</span
+            >
+          </div>
+        </div>
+
+        <form action="/process_text" method="POST">
+          <input type="hidden" name="input_text" value="{{ input_text }}" />
+          <button class="b1" type="submit">Process Text</button>
+        </form>
+      </div>
+    </center>
+    <script>
+      // JavaScript to handle model toggling
+      document
+        .getElementById("toggleButton")
+        .addEventListener("click", function () {
+          // Get the current model from the hidden input
+          var currentModel = document.getElementById("currentModel").value;
+
+          // Toggle the display of score boxes based on the current model
+          if (currentModel === "bilstm") {
+            document.getElementById("model_heading").innerHTML = "Multioutput Regressor Scores"
+            document.querySelectorAll(".bilstm").forEach(function (element) {
+              element.style.display = "none";
+            });
+            document
+              .querySelectorAll(".second-model")
+              .forEach(function (element) {
+                element.style.display = "block";
+              });
+            // Update the current model in the hidden input
+            document.getElementById("currentModel").value = "second";
+          } else {
+            document.getElementById("model_heading").innerHTML = "Bi LSTM Scores"
+
+            // Toggle back to the BiLSTM model
+            document
+              .querySelectorAll(".second-model")
+              .forEach(function (element) {
+                element.style.display = "none";
+              });
+            document.querySelectorAll(".bilstm").forEach(function (element) {
+              element.style.display = "block";
+            });
+            // Update the current model in the hidden input
+            document.getElementById("currentModel").value = "bilstm";
+          }
+        });
+    </script>
+  </body>
+</html>
