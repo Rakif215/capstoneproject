@@ -8,8 +8,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = Flask(__name__)
 
-
-client = OpenAI(api_key="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")
+key = input("Enter the api key for OpenAI: ")
+client = OpenAI(api_key=key)
 
 bilstm_tokenizer = Tokenizer()
 bilstm_tokenizer.fit_on_texts(pd.read_csv("data/train.csv"))
