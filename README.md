@@ -9,7 +9,11 @@ This can be very useful and consume less time than traditional and manual method
   ```bash
   pip install -r requirements.txt
   ```
-- Execute the app.py file and open the local host link
+- Execute the app.py file on the terminal
   ```bash
   python app.py
   ```
+-  Open the local host link
+  ```bash
+  http://127.0.0.1:5000
+  ```  
