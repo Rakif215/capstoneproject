@@ -10,6 +10,6 @@ This can be very useful and consume less time than traditional and manual method
   pip install -r requirements.txt
   ```
 - Execute the app.py file and open the local host link
-```bash
-python app.py
-```
+  ```bash
+  python app.py
+  ```
