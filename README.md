@@ -14,5 +14,6 @@ This can be very useful and consume less time than traditional and manual method
   python app.py
   ```
 -  Open the local host link
-  ```bash http://127.0.0.1:5000
+  ```bash
+  http://127.0.0.1:5000
   ```  
