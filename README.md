@@ -1,4 +1,4 @@
-# Capstone Project:
+# Automating English Language Assessment:
 This is a group project of 6 students from the College of Computing and IT in University of Doha for Science and Technology (UDST).  
 Language Assessments are very useful. They can be time-consuming with the increase in the domain of the students.  
 ## Aim of the Project:
