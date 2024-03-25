@@ -15,5 +15,5 @@ This can be very useful and consume less time than traditional and manual method
   ```
 -  Open the local host link
   ```bash
-  http://127.0.0.1:5000
+    http://127.0.0.1:5000
   ```  
