@@ -104,7 +104,7 @@ def error():
             model="gpt-3.5-turbo",
             response_format={"type": "json_object"}
         )
-        error_json = chat_completion.choices[0].message.content
+        error_json = json.loads(chat_completion.choices[0].message.content)
         return render_template('error.html', input_text = input_text, error_json = error_json)
 
 

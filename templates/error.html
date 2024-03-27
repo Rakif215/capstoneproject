@@ -21,8 +21,8 @@
 <script>
         const errorsContainer = document.getElementById('error-container');
         const errorTypes = {};
-        const errorJsonString = '{{ error_json | tojson | safe }}';
-        const jsonData = JSON.parse(errorJsonString);
+        const jsonData = {{ error_json | safe }};
+        console.log("Meri jhind ", jsonData)
         jsonData.errors.forEach(error => {
             if (!errorTypes[error.type]) {
                 errorTypes[error.type] = { count: 0 };
