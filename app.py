@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import joblib
+import json
 from openai import OpenAI
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.text import Tokenizer
