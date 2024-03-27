@@ -12,13 +12,42 @@
 <body>
   <center>
     <div id="container">
+      <p> Your text: {{input_text}}</p>
       <div class="error-container">
 
-        <p> Your text: {{input_text}}</p>
 
         <p> Json: {{error_json}}</p>
       </div>
+<script>
+        const errorsContainer = document.getElementById('error-container');
+        const errorTypes = {};
+        const errorJsonString = '{{ error_json | tojson | safe }}';
+        const jsonData = JSON.parse(errorJsonString);
+        jsonData.errors.forEach(error => {
+            if (!errorTypes[error.type]) {
+                errorTypes[error.type] = { count: 0 };
+            }
+            errorTypes[error.type].count++;
 
+            const errorContainer = document.createElement('div');
+            errorContainer.classList.add('error-container');
+            errorContainer.innerHTML = `
+                <p><strong>Type:</strong> ${error.type}</p>
+                <p><strong>Incorrect:</strong> ${error.incorrect}</p>
+                <p><strong>Correct:</strong> ${error.correct}</p>
+            `;
+            errorsContainer.appendChild(errorContainer);
+        });
+
+        // Display error counts
+        const errorCountsContainer = document.createElement('div');
+        errorCountsContainer.innerHTML = '<h3>Error Counts</h3>';
+        for (const type in errorTypes) {
+            const count = errorTypes[type].count;
+            errorCountsContainer.innerHTML += `<p>${type}: ${count}</p>`;
+        }
+        errorsContainer.prepend(errorCountsContainer);
+    </script>
          
   </center>
    
