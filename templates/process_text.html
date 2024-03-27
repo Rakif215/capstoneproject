@@ -19,8 +19,9 @@
             <h3>Corrected Text:</h3>
             <p>{{ corrected_essay }}</p>
           </div>
-          <form action="/error" method="GET">
+          <form action="/error" method="POST">
             <button class="b1" type="submit">Error Analysis</button>
+            <input type="hidden" name="input_text" value="{{ input_text }}" />
           </form>
         </div>
       </div>
