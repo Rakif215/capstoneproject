@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error Table</title>
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error Table</title>
-  <link rel="stylesheet" href="../static/style.css">
-
-</head>
-
-<body>
-  <center>
-    <div id="container">
-      <p> Your text: {{input_text}}</p>
-      <div class="error-container">
-
-
-        <p> Json: {{error_json}}</p>
+  <body>
+    <center>
+      <div id="container">
+        <p>Your text: {{input_text}}</p>
       </div>
-<script>
-        const errorsContainer = document.getElementById('error-container');
+
+      <div id="errors-container"></div>
+      <script>
+        const errorsContainer = document.getElementById('errors-container');
         const errorTypes = {};
         const jsonData = {{ error_json | safe }};
         console.log("Meri jhind ", jsonData)
@@ -47,11 +43,9 @@
             errorCountsContainer.innerHTML += `<p>${type}: ${count}</p>`;
         }
         errorsContainer.prepend(errorCountsContainer);
-    </script>
-         
-  </center>
-   
-  <script src="../static/script.js"></script>
-</body>
+      </script>
+    </center>
 
+    <script src="../static/script.js"></script>
+  </body>
 </html>
