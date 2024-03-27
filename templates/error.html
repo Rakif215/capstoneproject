@@ -14,54 +14,12 @@
     <div id="container">
       <div class="error-container">
 
+        <p> Your text: {{input_text}}</p>
 
-        <h4>Error Analysis</h4><br>
-        <div class="score-box-container">
-          <div class="score-box passive-voice-score">
-            Preposition<br><br>
-            <span id="sctext">{{ error }}%</span>
-          </div>
-          <div class="score-box passive-voice-score">
-            Verb Tense<br><br>
-            <span id="sctext">{{ error }}%</span>
-          </div>
-        </div>
-
-        <div class="faq-container">
-          <h4>
-            Most Common Errors
-          </h4>
-          <div class="faq-box" onclick="toggleAnswer(1)">
-            <div class="question">Prepositions <span class="err-text"></span></div>
-            <div class="answer" id="answer1">2 errors</div>
-          </div><br>
-
-          <div class="faq-box" onclick="toggleAnswer(2)">
-            <div class="question">Verb Tense <span class="err-text"></span></div>
-            <div class="answer" id="answer2">Incorrect verb tenses</div>
-          </div>
-
-          <div class="faq-box" onclick="toggleAnswer(3)">
-            <div class="question">Contractions <span class="err-text"></span></div>
-            <div class="answer" id="answer3">Missing contractions</div>
-          </div>
-
-          <div class="faq-box" onclick="toggleAnswer(4)">
-            <div class="question">Pronoun Agreements <span class="err-text"></span></div>
-            <div class="answer" id="answer4">Inconsistent pronouns</div>
-          </div>
-
-          <div class="faq-box" onclick="toggleAnswer(5)">
-            <div class="question">Plural Nouns <span class="err-text"></span></div>
-            <div class="answer" id="answer5">Singular nouns used as plural</div>
-          </div>
-
-          <!-- Add more FAQ boxes as needed -->
-        </div>
-
-
+        <p> Json: {{error_json}}</p>
       </div>
-    </div>
+
+         
   </center>
   <script src="../static/script.js"></script>
 </body>

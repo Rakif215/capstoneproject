@@ -66,9 +66,46 @@ def process_text():
         # here 
         return render_template('process_text.html', input_text=input_text , corrected_essay=corrected_essay)
 
-@app.route('/error', methods=['GET'])
+@app.route('/error', methods=['POST'])
 def error():
-    return render_template('error.html')
+    if request.method == 'POST':
+        input_text = request.form['input_text']       
+        prompt = '''Imagine you're an English Grammar Checker tasked with correcting an essay potentially riddled with grammar and spelling errors. 
+    Provide the corrected version of the essay along with feedback on the incorrect parts of speech. 
+    Errors should be identified based on their parts of speech. Format the output as JSON and MAKE IT CONSISTENT please. ''' + input_text
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+                {
+                    "role": "assistant",
+                    "content": '''Do not use Word Usage as error type please. 
+                    Use something that is related to parts of speech in English.
+                    Provide another field for a review sentence. 
+                    For example, a sentence such as 
+                    "instead of think in all the negative thing like i never been the same person",
+                    the review feedback should be:
+                    "You should have used the word 'thinking' instead of think and 'things' instead of thing".
+                    Please ensure that the errors such as 'subject verb agreement' appear only once in the json.
+                    If there are more than one error type, put the incorrect version on a list and correct versions on a list too.
+                    Add another key that contains the 'number_of_mistakes' overall in types.''',
+                },
+                {
+                    "role": "user",
+                    "content": '''Please give all the errors and their types. 
+                    I need to see errors like subject verb agreement, prepositions, verb tense, etc.
+                    '''
+                }
+
+            ],
+            model="gpt-3.5-turbo",
+            response_format={"type": "json_object"}
+        )
+        error_json = json.loads(chat_completion.choices[0].message.content)
+        return render_template('error.html', input_text = input_text, error_json = error_json)
+
 
 if __name__ == '__main__':
     app.run(debug=False)
