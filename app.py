@@ -71,39 +71,102 @@ def process_text():
 def error():
     if request.method == 'POST':
         input_text = request.form['input_text']       
-        prompt = '''Imagine you're an English Grammar Checker tasked with correcting an essay potentially riddled with grammar and spelling errors. 
-    Provide the corrected version of the essay along with feedback on the incorrect parts of speech. 
-    Errors should be identified based on their parts of speech. Format the output as JSON and MAKE IT CONSISTENT please. ''' + input_text
+    #     prompt = '''Imagine you're an English Grammar Checker tasked with correcting an essay potentially riddled with grammar and spelling errors. 
+    # Provide the corrected version of the essay along with feedback on the incorrect parts of speech. 
+    # Errors should be identified based on their parts of speech. Format the output as JSON and MAKE IT CONSISTENT please. ''' + input_text
+    #     chat_completion = client.chat.completions.create(
+    #         messages=[
+    #             {
+    #                 "role": "user",
+    #                 "content": prompt,
+    #             },
+    #             {
+    #                 "role": "assistant",
+    #                 "content": '''Do not use Word Usage as error type please. 
+    #                 Use something that is related to parts of speech in English.
+    #                 Provide another field for a review sentence. 
+    #                 For example, a sentence such as 
+    #                 "instead of think in all the negative thing like i never been the same person",
+    #                 the review feedback should be:
+    #                 "You should have used the word 'thinking' instead of think and 'things' instead of thing".
+    #                 Please ensure that the errors such as 'subject verb agreement' appear only once in the json.
+    #                 If there are more than one error type, put the incorrect version on a list and correct versions on a list too.
+    #                 Add another key that contains the 'number_of_mistakes' overall in types.''',
+    #             },
+    #             {
+    #                 "role": "user",
+    #                 "content": '''Please give all the errors and their types. 
+    #                 I need to see errors like subject verb agreement, prepositions, verb tense, etc.
+    #                 '''
+    #             }
+
+    #         ],
+    #         model="gpt-3.5-turbo",
+    #         response_format={"type": "json_object"}
+    #     )
+    #     error_json = json.loads(chat_completion.choices[0].message.content)
+        prompt = '''Assume that you are an English Grammar Checker. 
+                    You are given an essay that may contain improper grammar and spelling mistakes. 
+                    Your task is to write the correct version of the essay as well as provide feedback on the parts of speech that were wrong. 
+                    Identify each error in terms of parts of speech. 
+                    The output should be in a json format:'''
         chat_completion = client.chat.completions.create(
             messages=[
                 {
+                    "role": "system",
+                    "content": prompt
+                },
+                {
                     "role": "user",
-                    "content": prompt,
+                    "content": input_text,
                 },
                 {
                     "role": "assistant",
-                    "content": '''Do not use Word Usage as error type please. 
-                    Use something that is related to parts of speech in English.
-                    Provide another field for a review sentence. 
-                    For example, a sentence such as 
-                    "instead of think in all the negative thing like i never been the same person",
-                    the review feedback should be:
-                    "You should have used the word 'thinking' instead of think and 'things' instead of thing".
-                    Please ensure that the errors such as 'subject verb agreement' appear only once in the json.
-                    If there are more than one error type, put the incorrect version on a list and correct versions on a list too.
-                    Add another key that contains the 'number_of_mistakes' overall in types.''',
-                },
+                    "content": ''' I need an output like this:
+                        {
+                            "total_errors": 4,
+                            "errors": [
+                                {"type": "Pronoun",
+                                "original_sentence": original sentence
+                                "feedback": You should have used this instead of that...
+                                },
+                                {"type": "Subject Verb Agreement",
+                                "original_sentence": original sentence
+                                "feedback": You should have used this instead of that...
+                                },
+                                {"type": "Spelling",
+                                "original_sentence": original sentence with wrong spelling
+                                "feedback": The correct spelling for wor is word...
+                                },
+                                {"type": "Preposition",
+                                "original_sentence": she was afraid from cats
+                                "correct_sentence": she was afraid of cats
+                                },
+                                {"type": "Spelling",
+                                "original_sentence": original sentence with wrong spelling
+                                "feedback": The correct spelling for bacause is because...
+                                },
+                            ],
+                            "errors_count": {
+                            "Spelling": 2,
+                            "Subject Verb Agreement": 1,
+                            "Preposition": 1,
+                            "Pronoun": 1
+                            }
+                        }
+                    ''',
+                },        
                 {
                     "role": "user",
-                    "content": '''Please give all the errors and their types. 
-                    I need to see errors like subject verb agreement, prepositions, verb tense, etc.
-                    '''
-                }
+                    "content": "Please make sure that the format is consistent. The json should be the same format regardless of any input essay.",
+                },
 
             ],
             model="gpt-3.5-turbo",
             response_format={"type": "json_object"}
+            
         )
+
         error_json = json.loads(chat_completion.choices[0].message.content)
         return render_template('error.html', input_text = input_text, error_json = error_json)
 

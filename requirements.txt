@@ -1,7 +1,8 @@
 pandas
 numpy
-tensorflow
+tensorflow==2.15
 scikit-learn
 flask
 transformers
 joblib
+openai

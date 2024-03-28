@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Error Table</title>
-    <link rel="stylesheet" href="../static/style.css" />
-  </head>
-
-  <body>
-    <center>
-      <div id="container">
-        <p>Your text: {{input_text}}</p>
-      </div>
-
-      <div id="errors-container"></div>
-      <script>
-        const errorsContainer = document.getElementById('errors-container');
-        const errorTypes = {};
-        const jsonData = {{ error_json | safe }};
-        console.log("Meri jhind ", jsonData)
-        jsonData.errors.forEach(error => {
-            if (!errorTypes[error.type]) {
-                errorTypes[error.type] = { count: 0 };
-            }
-            errorTypes[error.type].count++;
-
-            const errorContainer = document.createElement('div');
-            errorContainer.classList.add('error-container');
-            errorContainer.innerHTML = `
-                <p><strong>Type:</strong> ${error.type}</p>
-                <p><strong>Incorrect:</strong> ${error.incorrect}</p>
-                <p><strong>Correct:</strong> ${error.correct}</p>
-            `;
-            errorsContainer.appendChild(errorContainer);
-        });
-
-        // Display error counts
-        const errorCountsContainer = document.createElement('div');
-        errorCountsContainer.innerHTML = '<h3>Error Counts</h3>';
-        for (const type in errorTypes) {
-            const count = errorTypes[type].count;
-            errorCountsContainer.innerHTML += `<p>${type}: ${count}</p>`;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        errorsContainer.prepend(errorCountsContainer);
-      </script>
-    </center>
-
-    <script src="../static/script.js"></script>
-  </body>
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .error-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .error-type {
+            font-weight: bold;
+            color: #FF5733;
+        }
+        .error-feedback {
+            margin-top: 5px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Total Errors: {{ error_json['total_errors'] }}</h1>
+        {% for error in error_json['errors'] %}
+        <div class="error-item">
+            <p class="error-type">{{ error['type'] }}</p>
+            <p>{{ error['feedback'] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
 </html>
