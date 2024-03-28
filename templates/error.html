@@ -48,7 +48,7 @@
         {% for error in error_json['errors'] %}
             {% set error_type = error['type'] %}
             {% if error_type not in error_groups %}
-                {% set error_groups[error_type] = [] %}
+                {% set _ = error_groups.update({error_type: []}) %}
             {% endif %}
             {% set _ = error_groups[error_type].append(error) %}
         {% endfor %}
