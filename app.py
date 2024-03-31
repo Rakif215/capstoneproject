@@ -15,6 +15,12 @@ client = OpenAI(api_key=key)
 bilstm_tokenizer = Tokenizer()
 bilstm_tokenizer.fit_on_texts(pd.read_csv("data/train.csv"))
 bilstm_model = load_model('model/bi_lstm_model.h5')
+grammar_model = joblib.load("Upadted Models/grammar_model.pkl")
+cohesion_model = joblib.load("Upadted Models/cohesion_model.pkl")
+vocabulary_model = joblib.load("Upadted Models/vocabulary_model.pkl")
+syntax_model = joblib.load("Upadted Models/syntax_model.pkl")
+conventions_model = joblib.load("Upadted Models/conventions_model.pkl")
+phraseology_model = joblib.load("Upadted Models/phraseology_model.pkl")
 
 multioutput_model = joblib.load('model/model2.joblib')
 vectorizer_tfidf = joblib.load('model/vectorizer.joblib')
@@ -34,7 +40,7 @@ def score():
         predictions = multioutput_model.predict(essay_tfIdf)
         # Extract prediction scores
         second_model_prediction = predictions
-
+        third_models = 
         # Process input_text using the BiL"STM model
         sequence = bilstm_tokenizer.texts_to_sequences([input_text])
         padded_sequence = pad_sequences(sequence, maxlen=bilstm_model.input_shape[1], padding='post')
