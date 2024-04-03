@@ -24,6 +24,8 @@ phraseology_model = joblib.load("Upadted Models/phraseology_model.pkl")
 
 multioutput_model = joblib.load('model/model2.joblib')
 vectorizer_tfidf = joblib.load('model/vectorizer.joblib')
+third_model = [grammar_model, cohesion_model, vocabulary_model, syntax_model, conventions_model, phraseology_model]
+
 
 # Routes
 @app.route('/')
@@ -40,17 +42,20 @@ def score():
         predictions = multioutput_model.predict(essay_tfIdf)
         # Extract prediction scores
         second_model_prediction = predictions
-        third_models = 
         # Process input_text using the BiL"STM model
         sequence = bilstm_tokenizer.texts_to_sequences([input_text])
         padded_sequence = pad_sequences(sequence, maxlen=bilstm_model.input_shape[1], padding='post')
         prediction = bilstm_model.predict(padded_sequence)
+        third_model_predictions = []
+        for model in third_model:
+            third_model_predictions.append(model.predict([input_text]))  # Adjust this according to your models
         
         # Process input_text using the second model (replace this with your actual second model)
 
         return render_template('score.html', input_text=input_text, 
                                prediction=prediction[0], 
-                               second_model_prediction=second_model_prediction[0]
+                               second_model_prediction=second_model_prediction[0],
+                               third_model_predictions= third_model_predictions
                               )
 
 @app.route('/process_text', methods=['POST'])
